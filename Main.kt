@@ -93,7 +93,6 @@ fun addStudent(students: MutableList<Student>) {
         println("Tên không được để trống.")
         return
     }
-
     print("Age: ")
     val age = readln().trim().toIntOrNull()
     if (age == null || age <= 0) {
