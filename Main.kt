@@ -9,42 +9,29 @@ data class Student(
     val major: String,
     val gpa: Double
 )
-// ============================================================
 // 2. HÀM BỎ DẤU TIẾNG VIỆT
-// ============================================================
 fun removeVietnameseAccents(text: String): String {
     var result = Normalizer.normalize(text, Normalizer.Form.NFD)
     result = result.replace(Regex("\\p{InCombiningDiacriticalMarks}+"), "")
     result = result.replace("đ", "d").replace("Đ", "D")
     return result
 }
-// ============================================================
 // 3. CHUẨN HÓA CHUỖI ĐỂ TÌM KIẾM
-// ============================================================
 fun normalizeText(text: String): String {
     return removeVietnameseAccents(text).lowercase().trim()
 }
-
-// ============================================================
 // 4. LẤY TÊN CỦA SINH VIÊN
-// ============================================================
 fun getStudentName(fullName: String): String {
     return fullName.trim().substringAfterLast(" ")
 }
-
-// ============================================================
 // 5. BỘ SO SÁNH TIẾNG VIỆT
-// ============================================================
 fun vietnameseCollator(): Collator {
     val collator = Collator.getInstance(Locale.forLanguageTag("vi-VN"))
     // PRIMARY: Ưu tiên so sánh chữ cái theo ngôn ngữ.
     collator.strength = Collator.PRIMARY
     return collator
 }
-
-// ============================================================
 // 6. SẮP XẾP THEO TÊN TIẾNG VIỆT
-// ============================================================
 fun sortByVietnameseName(students: List<Student>): List<Student> {
     val collator = vietnameseCollator()
     return students.sortedWith { student1, student2 ->
@@ -60,10 +47,7 @@ fun sortByVietnameseName(students: List<Student>): List<Student> {
         }
     }
 }
-
-// ============================================================
 // 7. IN MỘT SINH VIÊN
-// ============================================================
 fun displayStudent(student: Student) {
     println("----------------------------------------")
     println("Student ID : ${student.studentId}")
@@ -72,10 +56,7 @@ fun displayStudent(student: Student) {
     println("Major      : ${student.major}")
     println("GPA        : ${"%.2f".format(student.gpa)}")
 }
-
-// ============================================================
 // 8. IN DANH SÁCH SINH VIÊN
-// ============================================================
 fun displayStudentList(students: List<Student>) {
     if (students.isEmpty()) {
         println("Không có sinh viên.")
@@ -88,17 +69,11 @@ fun displayStudentList(students: List<Student>) {
     println("----------------------------------------")
     println("Total students: ${students.size}")
 }
-
-// ============================================================
 // 9. KIỂM TRA ID ĐÃ TỒN TẠI
-// ============================================================
 fun idExists(students: List<Student>, id: String): Boolean {
     return students.any { it.studentId.equals(id, ignoreCase = true) }
 }
-
-// ============================================================
 // 10. ADD STUDENT
-// ============================================================
 fun addStudent(students: MutableList<Student>) {
     println("\n========== ADD STUDENT ==========")
     print("Student ID: ")
@@ -145,18 +120,12 @@ fun addStudent(students: MutableList<Student>) {
     println("\nThêm sinh viên thành công.")
     displayStudent(student)
 }
-
-// ============================================================
 // 11. DISPLAY ALL STUDENTS
-// ============================================================
 fun displayAllStudents(students: List<Student>) {
     println("\n========== STUDENT LIST ==========")
     displayStudentList(students)
 }
-
-// ============================================================
 // 12. SEARCH STUDENT BY ID
-// ============================================================
 fun searchStudentById(students: List<Student>) {
     print("Enter Student ID: ")
     val id = readln().trim()
@@ -169,10 +138,7 @@ fun searchStudentById(students: List<Student>) {
         println("Không tìm thấy sinh viên.")
     }
 }
-
-// ============================================================
 // 13. CALCULATE AVERAGE GPA
-// ============================================================
 fun calculateAverageGpa(students: List<Student>) {
     if (students.isEmpty()) {
         println("Danh sách sinh viên trống.")
@@ -185,26 +151,17 @@ fun calculateAverageGpa(students: List<Student>) {
     val average = total / students.size
     println("Average GPA = %.2f".format(average))
 }
-
-// ============================================================
 // YÊU CẦU 1: ĐẾM SINH VIÊN GPA >= 8.0
-// ============================================================
 fun countGpaAbove8(students: List<Student>) {
     val count = students.count { it.gpa >= 8.0 }
     println("Số sinh viên có GPA >= 8.0: $count")
 }
-
-// ============================================================
 // YÊU CẦU 2: ĐẾM SINH VIÊN GPA < 5.0
-// ============================================================
 fun countGpaBelow5(students: List<Student>) {
     val count = students.count { it.gpa < 5.0 }
     println("Số sinh viên có GPA < 5.0: $count")
 }
-
-// ============================================================
 // YÊU CẦU 3: GPA TRUNG BÌNH THEO NGÀNH
-// ============================================================
 fun averageGpaByMajor(students: List<Student>) {
     print("Nhập ngành: ")
     val majorInput = readln().trim()
@@ -226,10 +183,7 @@ fun averageGpaByMajor(students: List<Student>) {
     println("Number of students: ${result.size}")
     println("Average GPA: %.2f".format(average))
 }
-
-// ============================================================
 // YÊU CẦU 4: TÌM SINH VIÊN GPA CAO NHẤT
-// ============================================================
 fun findHighestGpa(students: List<Student>) {
     if (students.isEmpty()) {
         println("Danh sách trống.")
@@ -241,10 +195,7 @@ fun findHighestGpa(students: List<Student>) {
     println("\n========== HIGHEST GPA ==========")
     displayStudentList(result)
 }
-
-// ============================================================
 // YÊU CẦU 5: TÌM SINH VIÊN LỚN TUỔI NHẤT
-// ============================================================
 fun findOldestStudent(students: List<Student>) {
     if (students.isEmpty()) {
         println("Danh sách trống.")
@@ -256,10 +207,7 @@ fun findOldestStudent(students: List<Student>) {
     println("\n========== OLDEST STUDENT ==========")
     displayStudentList(result)
 }
-
-// ============================================================
 // YÊU CẦU 6: TÌM GPA TRONG KHOẢNG 7.0 -> 8.5
-// ============================================================
 fun findGpaFrom7To85(students: List<Student>) {
     val result = students.filter { it.gpa in 7.0..8.5 }
     println("\n========== GPA 7.0 -> 8.5 ==========")
@@ -269,10 +217,7 @@ fun findGpaFrom7To85(students: List<Student>) {
     }
     displayStudentList(result)
 }
-
-// ============================================================
 // YÊU CẦU 7: TÌM TẤT CẢ SINH VIÊN THUỘC MỘT NGÀNH
-// ============================================================
 fun findStudentsByMajor(students: List<Student>) {
     print("Nhập ngành cần tìm: ")
     val majorInput = readln().trim()
@@ -286,10 +231,7 @@ fun findStudentsByMajor(students: List<Student>) {
     }
     displayStudentList(result)
 }
-
-// ============================================================
 // YÊU CẦU 8: TÌM SINH VIÊN THEO MỘT PHẦN TÊN
-// ============================================================
 fun searchStudentByPartialName(students: List<Student>) {
     print("Nhập một phần tên: ")
     val keyword = normalizeText(readln())
@@ -302,19 +244,13 @@ fun searchStudentByPartialName(students: List<Student>) {
     }
     displayStudentList(result)
 }
-
-// ============================================================
 // YÊU CẦU 9: SẮP XẾP GPA GIẢM DẦN
-// ============================================================
 fun sortByGpaDescending(students: List<Student>) {
     val result = students.sortedByDescending { it.gpa }
     println("\n========== GPA DESCENDING ==========")
     displayStudentList(result)
 }
-
-// ============================================================
 // YÊU CẦU 10: HIỂN THỊ TOP 3 GPA CAO NHẤT
-// ============================================================
 fun displayTop3Gpa(students: List<Student>) {
     if (students.isEmpty()) {
         println("Danh sách trống.")
@@ -324,28 +260,19 @@ fun displayTop3Gpa(students: List<Student>) {
     println("\n========== TOP 3 GPA ==========")
     displayStudentList(top3)
 }
-
-// ============================================================
 // YÊU CẦU 11: SẮP XẾP THEO TUỔI (nhỏ tuổi -> lớn tuổi)
-// ============================================================
 fun sortByAge(students: List<Student>) {
     val result = students.sortedBy { it.age }
     println("\n========== SORT BY AGE ==========")
     displayStudentList(result)
 }
-
-// ============================================================
 // YÊU CẦU 12: SẮP XẾP THEO TÊN TIẾNG VIỆT
-// ============================================================
 fun displaySortByVietnameseName(students: List<Student>) {
     val result = sortByVietnameseName(students)
     println("\n========== SORT BY VIETNAMESE NAME ==========")
     displayStudentList(result)
 }
-
-// ============================================================
 // 14. REMOVE STUDENT
-// ============================================================
 fun removeStudent(students: MutableList<Student>) {
     print("Nhập Student ID cần xóa: ")
     val id = readln().trim()
@@ -359,10 +286,7 @@ fun removeStudent(students: MutableList<Student>) {
     println("\nĐã xóa sinh viên:")
     displayStudent(student)
 }
-
-// ============================================================
 // 15. MENU
-// ============================================================
 fun displayMenu() {
     println("\n==============================================")
     println("          STUDENT MANAGEMENT")
@@ -389,10 +313,7 @@ fun displayMenu() {
     println("==============================================")
     print("Choose: ")
 }
-
-// ============================================================
 // 16. MAIN
-// ============================================================
 fun main() {
     val students = mutableListOf(
         Student("SV001", "Nguyễn Văn Ánh", 20, "Công nghệ thông tin", 8.70),
